@@ -8,6 +8,15 @@ const AppReducer = (state, action) => {
       return { ...state, data: action.payload, loading: false, error: null };
     case 'SET_FILTER':
       return { ...state, filterText: action.payload };
+    case 'MARK_DELIVERED':
+      return {
+        ...state,
+        data: state.data.map((order) =>
+          order.orderId === action.payload
+            ? { ...order, status: 'Delivered' }
+            : order
+        ),
+      };
     default:
       return state;
   }

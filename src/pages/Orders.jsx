@@ -1,11 +1,12 @@
 import { useAppContext } from '../context/AppContext';
 import OrderCard from '../components/OrderCard';
 
-const isValidOrder = (order) => {
+export const isValidOrder = (order) => {
   if (!order.items || !Array.isArray(order.items) || order.items.length === 0) return false;
   const hasValidItems = order.items.some(item => item.quantity > 0);
   if (!hasValidItems) return false;
   if (!order.totalAmount || isNaN(order.totalAmount) || order.totalAmount <= 0) return false;
+  if (!order.status) return false;
   return true;
 };
 
@@ -16,12 +17,16 @@ const Orders = () => {
   if (error) return <p>Error: {error}</p>;
 
   const validOrders = data.filter(isValidOrder);
+  const pendingOrders = validOrders.filter(
+    (o) => o.status.toLowerCase() !== 'delivered'
+  );
 
   return (
     <main>
       <h1>All Orders</h1>
-      <p>Showing {validOrders.length} valid orders</p>
-      {validOrders.map((order) => (
+      <p>Total Valid Orders: {validOrders.length}</p>
+      <p>Pending Orders: {pendingOrders.length}</p>
+      {pendingOrders.map((order) => (
         <OrderCard key={order.orderId} order={order} />
       ))}
     </main>
@@ -29,4 +34,3 @@ const Orders = () => {
 };
 
 export default Orders;
-export { isValidOrder };
