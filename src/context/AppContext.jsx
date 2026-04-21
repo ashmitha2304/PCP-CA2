@@ -3,16 +3,15 @@ import AppReducer from '../reducer/AppReducer';
 
 const initialState = {
   data: [],
-  favorites: [],
   loading: false,
   error: null,
+  filterText: '',
 };
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>
       {children}

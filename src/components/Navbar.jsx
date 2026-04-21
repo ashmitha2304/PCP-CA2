@@ -6,8 +6,8 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Link className={isActive('/')} to="/">Home</Link>
-      <Link className={isActive('/favorites')} to="/favorites">Favorites</Link>
+      <Link className={isActive('/orders')} to="/orders">Orders</Link>
+      <Link className={isActive('/filter')} to="/filter">Filter</Link>
       <Link className={isActive('/stats')} to="/stats">Stats</Link>
     </nav>
   );
